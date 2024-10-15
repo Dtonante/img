@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import db from '../database/db.js'; // Asegúrate de que la ruta sea correcta
+import db from '../database/db.js'; 
 
 const Producto = db.define('Producto', {
     id: {
@@ -8,19 +8,32 @@ const Producto = db.define('Producto', {
         primaryKey: true,
     },
     imagen: {
-        type: DataTypes.STRING, // Puedes usar STRING para almacenar la URL o el nombre del archivo de la imagen
-        allowNull: false, // Hacer que sea obligatorio
+        type: DataTypes.STRING, 
+        allowNull: true, 
+    },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    descripcion: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    cantidad: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
     }
 }, {
     tableName: 'productos',
-    timestamps: true, // Agregar createdAt y updatedAt automáticamente
+    // Agregar createdAt y updatedAt automáticamente
+    timestamps: true, 
 });
 
 
 // Sincronizar el modelo con la base de datos
 const sync = async () => {
     try {
-        await db.sync();
+        await db.sync({ force: false});
         console.log('Modelo sincronizado con la base de datos');
     } catch (error) {
         console.error('Error al sincronizar el modelo:', error);
